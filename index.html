@@ -8,19 +8,44 @@
 </head>
 <body>
     <button id="getText">Get Text</button>
+    <button id="getJSON">Get JSON</button>
     <div id="text-output"></div>
+
     <script>
         var textbutton = document.querySelector('#getText');
         textbutton.addEventListener('click', getText);
 
+        var JSONbutton = document.querySelector('#getJSON');
+        JSONbutton.addEventListener('click', getJSON);
+
         var textOutput = document.querySelector('#text-output');
 
         function getText(){
-            fetch('./sample.txt').then((res)=>res.text())
+            fetch('./sample.txt').then((res)=>res.text()) // fetch returns promises
             .then((data) => {
                 textOutput.innerHTML = data;
             });
         }
+
+        function getJSON(){
+            fetch('./users.json')
+            .then((res) => res.json()) // returns promise whereas JSON.parse() returns string
+            .then((users) =>{
+                let output = '<h2>Users:</h2>';
+                users.forEach(user => {
+                    output += `
+                    <ul>
+                        <li> ID: ${user.id}</li>
+                        <li> name: ${user.name}</li>
+                        <li> email: ${user.email}</li>
+                    </ul>
+                    `
+                });
+
+                textOutput.innerHTML = output;
+            })
+        }
+
     </script>
 </body>
 </html>
