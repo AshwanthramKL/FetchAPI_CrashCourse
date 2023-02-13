@@ -8,14 +8,18 @@
 </head>
 <body>
     <button id="getText">Get Text</button>
-
+    <div id="text-output"></div>
     <script>
         var textbutton = document.querySelector('#getText');
         textbutton.addEventListener('click', getText);
 
+        var textOutput = document.querySelector('#text-output');
+
         function getText(){
             fetch('./sample.txt').then((res)=>res.text())
-            .then((data) => console.log(data));
+            .then((data) => {
+                textOutput.innerHTML = data;
+            });
         }
     </script>
 </body>
